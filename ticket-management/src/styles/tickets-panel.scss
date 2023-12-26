@@ -1,0 +1,127 @@
+.tickets-panel-wrapper {
+    .ticket-table-wrapper {
+      margin-top: 24px;
+      padding: 12px;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px 0 rgba(38, 40, 42, 0.3);
+      background-color: #fff;
+  
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+  
+      thead {
+        background-color: #555;
+        border-bottom: 1px solid #e0e0e0;
+        
+        th {
+          padding: 12px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #fff;
+          text-align: left;
+        }
+      }
+  
+      tbody {
+        tr {
+          border-bottom: 1px solid #e0e0e0;
+          cursor: pointer;
+  
+          td {
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #555;
+            text-align: left;
+          }
+  
+          &:hover {
+            background-color: #f5f5f5;
+          }
+        }
+      }
+    }
+  
+    .pagination {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+  
+      button, .pagination-span, .selected-option, .option {
+        padding: 5px 10px;
+        margin: 0 5px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        color: #333;
+        outline: none;
+  
+        &:disabled {
+          cursor: default;
+          opacity: 0.5;
+        }
+  
+        &:hover:not(:disabled) {
+          background-color: #f0f0f0;
+        }
+      }
+  
+      .pagination-span, .selected-option {
+        background-color: #f0f0f0;
+        color: #333;
+      }
+  
+      .selected-option {
+        border: none;
+        border-radius: 0;
+      }
+  
+      .option {
+        justify-content: center;
+      }
+    }
+  }
+  @media (max-width: 767px) {
+    // Ekran genişliği 767 pikselden küçükse, table'ı responsive hale getir
+    thead {
+      display: none; // Başlık sütunu gizle
+    }
+
+    tbody {
+      display: block; // Body'yi blok haline getir
+      
+      tr {
+        margin-bottom: 15px; // Satırlar arasına boşluk ekleyin
+        display: flex;
+        flex-direction: column; // Satırları dikey olarak düzenle
+
+        td {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          padding: 12px;
+
+          &:before {
+            content: attr(data-label); // Başlık içeriğini kullanarak içerikleri belirt
+            font-weight: 500;
+            color: #555;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .pagination {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 10px;
+      .pagination-per{
+        margin-bottom: 10px;
+      }
+    }
+  }

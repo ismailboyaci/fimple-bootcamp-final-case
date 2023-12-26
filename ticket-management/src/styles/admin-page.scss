@@ -1,0 +1,145 @@
+.admin-page-wrapper {
+  display: flex;
+
+  .admin-page-menu {
+    min-width: 190px;
+    background-color: #333;
+    color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    min-height: 100dvh;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .menu-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .menu-icon {
+      cursor: pointer;
+    }
+
+    .menu-item {
+      margin-bottom: 10px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #555;
+      }
+    }
+
+    .menu-list {
+      width: 100%;
+      padding-left: 15px;
+
+      .tab {
+        border: none;
+        cursor: pointer;
+        justify-content: flex-start;
+        list-style: none;
+
+        .tab-icon {
+          margin-right: 10px;
+        }
+        &:hover {
+          background-color: #555;
+        }
+
+        .tab-title {
+          display: block;
+          width: 100%;
+          text-align: center;
+
+          &.closed {
+            display: none;
+          }
+        }
+      }
+      .tab.active-tab {
+        background-color: lighten($color: #555, $amount: 0.5);
+      }
+
+      &.closed {
+        padding-left: 20px;
+
+        .tab:hover {
+          background-color: #555;
+          width: 160px;
+          z-index: 9999;
+          position: relative;
+          .tab-title {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  .main {
+    flex: 1;
+    padding-bottom: 20px;
+
+    .content {
+      padding: 20px 20px 0 20px;
+      position: relative;
+      height: 96%;
+    }
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+  
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 8px;
+  
+      span {
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+.admin-page-wrapper.closed {
+  .admin-page-menu {
+    min-width: 0;
+    width: 85px;
+    position: relative;
+  }
+  .main {
+    opacity: 1;
+  }
+}
+
+.admin-page-wrapper.open.mobile {
+  .admin-page-menu {
+    position: absolute;
+    z-index: 9999;
+  }
+  .main {
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 767px) {
+  .admin-page-wrapper {
+    .content{
+      right: 0;
+    }
+  }
+}

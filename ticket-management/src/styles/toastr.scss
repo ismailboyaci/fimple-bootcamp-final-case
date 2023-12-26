@@ -1,0 +1,41 @@
+.toastr-wrapper {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 10px 10px;
+  .toastr {
+    cursor: pointer;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 20px;
+    box-shadow: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    &.toastr-success {
+      background-color: #dff0d8;
+      border-color: #d6e9c6;
+      color: #3c763d;
+    }
+    &.toastr-error {
+      background-color: #f2dede;
+      border-color: #ebccd1;
+      color: #a94442;
+    }
+    &.toast-info {
+      background-color: #d9edf7;
+      border-color: #bce8f1;
+      color: #31708f;
+    }
+    &.toast-warning {
+      background-color: #fcf8e3;
+      border-color: #faebcc;
+      color: #8a6d3b;
+    }
+    p {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+    }
+  }
+}

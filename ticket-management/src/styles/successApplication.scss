@@ -1,0 +1,37 @@
+/* SuccessApplication.scss */
+
+.success-page-wrapper {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+    .success-page {
+      h2 {
+        color: #333;
+      }
+  
+      ul {
+        list-style-type: none;
+        padding: 0;
+  
+        li {
+          margin-bottom: 10px;
+          strong {
+            margin-right: 5px;
+          }
+        }
+      }
+  
+      .note-section {
+        margin-top: 20px;
+        p {
+          font-style: italic;
+          color: #888;
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,48 @@
+// shared/Dropdown.module.scss
+
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .selected-option {
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 2px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+  
+    img {
+      margin-left: 8px;
+      width: 20px; // İcon boyutunu ihtiyacınıza göre ayarlayabilirsiniz.
+    }
+  }
+  
+  .options-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  
+    .option {
+      cursor: pointer;
+      padding: 3px;
+      display: flex;
+      align-items: center;
+  
+      &:hover {
+        background-color: #f5f5f5;
+      }
+  
+      img {
+        margin-left: 8px;
+        width: 20px; // İcon boyutunu ihtiyacınıza göre ayarlayabilirsiniz.
+      }
+    }
+  }
+  

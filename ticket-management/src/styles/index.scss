@@ -1,0 +1,26 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// small screen
+@media only screen and (max-width: 600px) {
+  * {
+    font-size: 12px;
+  }
+}
+
+// medium screen
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+  * {
+    font-size: 14px;
+  }
+}
+
+// large screen
+@media only screen and (min-width: 769px) {
+  * {
+    font-size: 16px;
+  }
+}
