@@ -1,22 +1,22 @@
 export const categories = [
   {
     id: 1,
-    name: 'General',
+    name: 'general',
   },
   {
     id: 2,
-    name: 'Software Issues',
+    name: 'software_issue',
   },
   {
     id: 3,
-    name: 'Hardware Issues',
+    name: 'hardware_issue',
   },
   {
     id: 4,
-    name: 'E-mail Problems',
+    name: 'email_problem',
   },
   {
     id: 5,
-    name: 'Network Connectivity',
+    name: 'network_issue',
   },
   ];

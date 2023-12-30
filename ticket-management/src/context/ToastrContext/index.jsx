@@ -12,10 +12,9 @@ export const ToastrProvider = ({ children }) => {
       message,
     });
 
-    // Toastr'ı belirli bir süre sonra kaldır
     setTimeout(() => {
       setToastr(null);
-    }, 300000);
+    }, 3000);
   };
 
   const onClose = () => {

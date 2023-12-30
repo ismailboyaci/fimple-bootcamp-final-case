@@ -1,54 +1,48 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '~/context';
-import '~/styles/admin-modal.scss';
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
 import { useNavigate } from "react-router-dom"
+import { useTranslation } from 'react-i18next';
+import { useToastr } from '~/context';
+
+import '~/styles/admin-modal.scss';
 
 const AdminModal = ({ onClose, onLogin }) => {
+  const { t } = useTranslation();
+  const showToastr = useToastr();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { user } = useAuth();
-  const auth = getAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    // Burada admin girişi kontrolü yapılabilir.
-    // Örneğin, sabit bir kullanıcı adı ve şifre kontrolü:
-    // try {
-    //   await login(username, password);
-    //   onLogin();
-    //   onClose();
-    // } catch (error) {
-    //   console.error('Login error:', error.message);
-    //   alert('Invalid credentials. Please try again.');
-    // }
-    signInWithEmailAndPassword(auth, username, password)
-      .then((user) => {
-        // Success...
-        console.log(user);
-        navigate('/admin');
-        //...
-      })
-      .catch((error) => {
-        // Error
-        console.log(error);
-      });
+    await login(username, password)
+    .then((res) => {
+      if(res === 200){
+        showToastr('success', 'success_login');
+        navigate('/admin')
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   };
 
   return (
     <div className='modal'>
       <div className='modal-content'>
-        <h2>Admin Login</h2>
+        <h2>{t('admin_login')}</h2>
         <label>
-          Username:
+          {t('username_email')}:
           <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
         </label>
         <label>
-          Password:
+          {t('password')}:
           <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
         </label>
-        <button onClick={handleLogin}>Login</button>
-        <button onClick={onClose}>Close</button>
+       <div className="admin-modal-buttons">
+       <button className="button" onClick={handleLogin}>{t('login')}</button>
+        <button className="button" onClick={onClose}>{t('close')}</button>
+       </div>
       </div>
     </div>
   );

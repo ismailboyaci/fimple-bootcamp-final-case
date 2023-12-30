@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
-import { AdminPage, Application, CreateApplication, HomePage, QueryApplication } from "~/pages";
+import { AdminPage, Application, CreateApplication, HomePage, QueryApplication, SuccessApplication } from "~/pages";
 import { useAuth } from "~/context";
+import { lazy } from "react";
 
 const ProtectedRoute = ({
   isAllowed,
@@ -14,6 +15,8 @@ const ProtectedRoute = ({
   return children ? children : <Outlet />;
 };
 
+const LazyAdminPage = lazy(() => import('~/pages/AdminPage'));
+
 export const AppRoutes = () => {
   const { user } = useAuth();
   return (
@@ -22,9 +25,10 @@ export const AppRoutes = () => {
       <Route path="/create-application" element={<CreateApplication />} />
       <Route path="/query-application" element={<QueryApplication />} />
       <Route path="/application/:applicationId" element={<Application />} />
+      <Route path="/application-success/:applicationId" element={<SuccessApplication />} />
       <Route element={<ProtectedRoute isAllowed={user} />}>
-        <Route path="/admin" element={<AdminPage />} >
-        <Route path=":tab" element={<AdminPage />} />
+        <Route path="/admin" element={<LazyAdminPage />} >
+        <Route path=":tab" element={<LazyAdminPage />} />
         </Route>
       </Route>
     </Routes>

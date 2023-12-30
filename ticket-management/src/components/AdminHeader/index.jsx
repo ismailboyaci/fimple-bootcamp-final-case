@@ -1,65 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '~/styles/admin-header.scss';
 import { MdLogout } from 'react-icons/md';
-import { FiUser } from 'react-icons/fi';
-import { BiPlusCircle } from "react-icons/bi";
-
-
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '~/services';
-import profileImage from '../../assets/profile-placeholder.png';
-import { getAuth, signOut } from "firebase/auth";
+import { BiPlusCircle } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '~/context';
+import { useTranslation } from 'react-i18next';
 
 const AdminHeader = ({ user }) => {
-  const [userData, setUserData] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
+  const navigate = useNavigate();
+  const {logout} = useAuth();
+  const { t } = useTranslation();
 
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const docRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setUserData(docSnap.data());
-        } else {
-          console.log('No such document!');
-        }
-      } catch (error) {
-        console.error('Error getting user data:', error);
-      } finally {
-        setIsLoaded(true);
-        console.log('user data fetched');
-      }
-    };
-    getUserData();
-  }, [user]);
+  const createTicket = () => {
+    localStorage.setItem('history', '/admin');
+    navigate('/create-application');
+  };
 
-  const onLogout = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        console.log('sign out successful');
-      })
-      .catch((error) => {
-        // An error happened.
-        console.log('sign out error', error);
-      });
+  const onLogout = async () => {
+    logout();
   };
 
   return (
     <div className='admin-header-wrapper'>
       <header className='header'>
-        <div className="create-ticket-div">
-          <button className="button">
+        <div className='create-ticket-div'>
+          <button className='button' onClick={createTicket}>
             <BiPlusCircle size={24} />
-            <span>Create Ticket</span>
+            <span>{t('create_application')}</span>
           </button>
         </div>
         <div className='logout'>
           <button onClick={() => setOpenDropdown(!openDropdown)}>
-            <img src={isLoaded ? userData?.profileImg || profileImage : profileImage} alt='user-profile-image' />
+            <img src={user.profileImg} alt='user-profile-image' />
           </button>
         </div>
         {openDropdown && (
@@ -69,16 +42,16 @@ const AdminHeader = ({ user }) => {
                 <p>{user.displayName || user.email}</p>
                 <hr />
               </li>
-              <li className='dropdown-item'>
+              {/* <li className='dropdown-item'>
                 <button className='button w-100'>
                   <FiUser size={24} />
                   <p>View Profile</p>
                 </button>
-              </li>
+              </li> */}
               <li className='dropdown-item'>
                 <button className='button w-100' onClick={onLogout}>
                   <MdLogout size={24} />
-                  <p>Çıkış Yap</p>
+                  <p>{t('logged_out')}</p>
                 </button>
               </li>
             </ul>

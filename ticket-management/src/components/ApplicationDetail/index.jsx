@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import '~/styles/application-detail.scss';
-import { useApplications } from '~/hooks';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { categories, status } from '~/constants';
 import * as yup from 'yup';
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from '~/services';
+import { updateTicket, getTicketById } from '~/services';
 import { useAuth } from "~/context";
+import { useTranslation } from 'react-i18next';
+import { useToastr } from '~/context';
 
 const schema = yup.object().shape({
   solution: yup.string().required(),
@@ -16,17 +16,23 @@ const schema = yup.object().shape({
 });
 
 const ApplicationDetail = () => {
+  const { t } = useTranslation();
+  const showToastr = useToastr();
   const { user } = useAuth();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const applicationId = searchParams.get('applicationId');
-
-  const { ticketsData } = useApplications(applicationId);
-  const [applicationData, setApplicationData] = useState(null);
+  const [ticketData, setTicketData] = useState();
 
   useEffect(() => {
-    setApplicationData(ticketsData[0]);
-    console.log(ticketsData[0]);
-  }, [ticketsData]);
+    const getTicketData = async () => {
+      const response = await getTicketById(applicationId);
+      if(response.status === 200) {
+        setTicketData(response.data.data);
+      }
+    };
+    getTicketData();
+  }, [applicationId]);
 
   const {
     register,
@@ -38,21 +44,16 @@ const ApplicationDetail = () => {
   });
 
   const onSubmit = async (data) => {
-    const ticketRef = doc(db, "applications", applicationId);
-    console.log(ticketRef)
-    try {
-      await updateDoc(ticketRef, {
-        solutionDescription: applicationData.solutionDescription.concat(data.solution),
-        status: data.status,
-        isSolved: true,
-        updatedAt: Number(new Date()),
-        lastReplier: user.email
-      });
-    } catch (error) {
-      console.log(error);
-    }finally{
-      console.log('finally');
-  };
+   const params = {
+    solutions: [...ticketData?.solutions,data.solution],
+    status: data.status,
+    lastreply: user.email,
+    updatedAt: new Date()
+   }
+   const response = await updateTicket(applicationId, params);
+   if(response.status === 200) {
+    navigate('tickets');
+   }
 }
 
   return (
@@ -60,49 +61,51 @@ const ApplicationDetail = () => {
       <div className='application-info'>
         <div className='description-wrapper'>
           <div className='description-group'>
-            <h3>Description</h3>
-            <p>{applicationData?.applicationDescription}</p>
+            <h3>{t('description')}</h3>
+            <p>{ticketData?.description}</p>
           </div>
           <div className='attachments-group'>
-            <h3>Attachments</h3>
+            <h3>{t('attachment_files')}</h3>
             <div className='attachments'>
-              {applicationData?.attachments.map((attachment, index) => (
+              {ticketData?.attachments.map((attachment, index) => (
                 <a href={attachment} key={index} target='blank'>
-                  Attachment {index + 1}
+                  {t('attachment')} {index + 1}
                 </a>
               ))}
-              {applicationData?.attachments.length === 0 && <p>No attachments</p>}
+              {ticketData?.attachments.length === 0 && <p>
+                {t('no_attachment')}
+                </p>}
             </div>
           </div>
         </div>
         <div className='information-wrapper'>
-          <h3>Applications Details</h3>
+          <h3>{t('details_application')}</h3>
           <div className='info-group'>
             <table>
               <tbody>
                 <tr>
-                  <td>Application ID</td>
-                  <td>{applicationData?.id}</td>
+                  <td>{t('number_of')}</td>
+                  <td>{ticketData?._id}</td>
                 </tr>
                 <tr>
-                  <td>Creator </td>
-                  <td>{applicationData?.firstName + ' ' + applicationData?.lastName}</td>
+                  <td>{t('name')} </td>
+                  <td>{ticketData?.firstname + ' ' + ticketData?.lastname}</td>
                 </tr>
                 <tr>
-                  <td>Status</td>
-                  <td>{applicationData?.isSolved ? 'Solved' : 'Unsolved'}</td>
+                  <td>{t('status')}</td>
+                  <td>{t(status.find((status) => status.id == ticketData?.status)?.name)}</td>
                 </tr>
                 <tr>
-                  <td>Category</td>
-                  <td>{categories.find((category) => category.id == applicationData?.applicationSubject)?.name || 'N/A'}</td>
+                  <td>{t('category')}</td>
+                  <td>{t(categories.find((category) => category.id == ticketData?.subject)?.name || 'N/A')}</td>
                 </tr>
                 <tr>
-                  <td>Created Date</td>
-                  <td>{new Date(applicationData?.createdAt).toLocaleString()}</td>
+                  <td>{t('create_date')}</td>
+                  <td>{new Date(ticketData?.createdAt).toLocaleString()}</td>
                 </tr>
                 <tr>
-                  <td>Last Update Date</td>
-                  <td>{new Date(applicationData?.updatedAt).toLocaleString()}</td>
+                  <td>{t('last_update')}</td>
+                  <td>{new Date(ticketData?.updatedAt || ticketData?.createdAt).toLocaleString()}</td>
                 </tr>
               </tbody>
             </table>
@@ -114,17 +117,17 @@ const ApplicationDetail = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className='form-row'>
               <div className='solution-col'>
-                <label htmlFor='solution'>Solution</label>
+                <label htmlFor='solution'>{t('solution')}</label>
                 <textarea {...register('solution')} rows={5} />
                 <p>{errors.solution?.message}</p>
               </div>
               <div className='submit-col'>
                 <div className='form-status'>
-                  <label htmlFor='status'>Status</label>
+                  <label htmlFor='status'>{t('status')}</label>
                   <select {...register('status')}>
                     {status.map((status) => (
                       <option value={status.id} key={status.id}>
-                        {status.name}
+                        {t(status.name)}
                       </option>
                     ))}
                   </select>
@@ -132,7 +135,7 @@ const ApplicationDetail = () => {
                 </div>
                 <div className='submit'>
                   <button className='button' type='submit'>
-                    Submit
+                    {t('submit')}
                   </button>
                 </div>
               </div>

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '~/services';
 import '~/styles/tickets-panel.scss';
 import { Dropdown } from '~/shared';
 import { useNavigate } from 'react-router-dom';
 import withLoading from '~/hoc/withLoading';
+import { getTickets } from '~/services';
+import { categories, status } from '~/constants';
+import { useTranslation } from 'react-i18next';
 
 const pageOptions = [
   { text: '3', value: 3 },
@@ -14,33 +15,39 @@ const pageOptions = [
 ];
 
 const TicketsPanel = ({setLoading}) => {
+  const { t } = useTranslation();
   const [ticketsData, setTicketsData] = useState([]);
   const [totalTickets, setTotalTickets] = useState(0);
+  const [sortBy, setSortBy] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [ticketsPerPage, setTicketsPerPage] = useState(3);
-  const totalPages = Math.ceil(totalTickets / ticketsPerPage);
+  const [pageSize, setPageSize] = useState(5);
+  const totalPages = Math.ceil(totalTickets / pageSize);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getTickets = async () => {
-      const startIndex = (currentPage - 1) * ticketsPerPage;
-      const endIndex = startIndex + ticketsPerPage;
-
-      try {
-        setLoading(true);
-        const querySnapshot = await getDocs(collection(db, 'applications'));
-        const tickets = querySnapshot.docs.map((doc) => doc.data());
-        setTicketsData(tickets.slice(startIndex, endIndex));
-        setTotalTickets(tickets.length);
-      } catch (error) {
-        console.error(error);
-      }finally{
-        setLoading(false);
+    const getTicketData = async () => {
+      setLoading(true);
+      const result = await getTickets(currentPage, pageSize, '', '', sortBy, sortOrder);
+      if(result.status === 200) {
+        setTicketsData(result.data.data);
+        setTotalTickets(result.data.totalRecords);
+        setLoading(false);  
       }
     };
 
-    getTickets();
-  }, [currentPage, ticketsPerPage]);
+    getTicketData();
+  }, [sortBy, sortOrder, currentPage, pageSize]);
+
+  const sortData = (key) => {
+    if (sortBy === key) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(key);
+      setSortOrder('asc');
+    }
+  }
+
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -56,39 +63,39 @@ const TicketsPanel = ({setLoading}) => {
         <table>
           <thead>
             <tr>
-              <th>Application ID</th>
-              <th>Last Update Date</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Status</th>
-              <th>Last Replier</th>
+              <th>{t('number_of')}</th>
+              <th onClick={() => sortData('createdAt')}>{t('last_update')}</th>
+              <th>{t('name')}</th>
+              <th>{t('category')}</th>
+              <th>{t('status')}</th>
+              <th>{t('last_replier')}</th>
             </tr>
           </thead>
           <tbody>
-            {ticketsData.map((ticket, index) => (
-              <tr key={index} onClick={() => gotoTicket(ticket.id)}>
-                <td>{ticket.id}</td>
+            {ticketsData?.map((ticket, index) => (
+              <tr key={index} onClick={() => gotoTicket(ticket._id)}>
+                <td>{ticket._id}</td>
                 <td>{new Date(ticket.updatedAt || ticket.createdAt).toLocaleString()}</td>
-                <td>{`${ticket.firstName} ${ticket.lastName}`}</td>
-                <td>{ticket.applicationSubject}</td>
-                <td>{ticket.status || 'open'}</td>
-                <td>{ticket.lastReplier}</td>
+                <td>{`${ticket.firstname} ${ticket.lastname}`}</td>
+                <td>{t(categories.find((category) => category.id == ticket?.subject)?.name || 'N/A')}</td>
+                <td>{t(status.find((status) => status.id === ticket?.status)?.name)}</td>
+                <td>{ticket.lastreply}</td>
               </tr>
             ))}
           </tbody>
         </table>
         <div className='pagination'>
           <div className='pagination-per'>
-            <span className='pagination-span'>Per Page:</span>
-            <Dropdown options={pageOptions} onSelect={(e) => setTicketsPerPage(e.value)} />
+            <span className='pagination-span'>{t('per_page')}:</span>
+            <Dropdown options={pageOptions} onSelect={(e) => setPageSize(e.value)} />
           </div>
           <div className='pagination-button'>
           <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-            Previous
+            {t('previous')}
           </button>
           <span className='pagination-span'>{currentPage}</span>
           <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
-            Next
+            {t('next')}
           </button>
           </div>
         </div>

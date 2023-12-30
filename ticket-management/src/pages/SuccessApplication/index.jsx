@@ -1,58 +1,57 @@
 import React, {useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import { ContentHeader } from '~/shared';
-import { doc, getDoc } from "firebase/firestore";
-import { db } from '~/services';
+import { getTicketById } from '~/services';
 import '~/styles/SuccessApplication.scss';
-
-const SuccessApplication =  () => {
+import withLoading from '~/hoc/withLoading';
+import { useTranslation } from 'react-i18next';
+const SuccessApplication =  ({setLoading}) => {
   const { applicationId } = useParams();
-  const [applicationData, setApplicationData] = useState(null);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [applicationData, setApplicationData] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const docRef = doc(db, "applications", applicationId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setApplicationData(docSnap.data());
-        setIsDataLoaded(true);
-      } else {
-        console.log("No such document!");
+    setLoading(true);
+    const getTicket = async () => {
+      const result = await getTicketById(applicationId);
+      if(result.status === 200) {
+        setApplicationData(result.data.data);
       }
-    };
-
-    fetchData();
+      setLoading(false);
+      setIsDataLoaded(true);
+    }
+    getTicket();
   }, []);
 
 
   return (
     <div>
-      <ContentHeader title="Success Application" prevPage="/create-application" showPrevIcon={true} />
+      <ContentHeader title={t('success_application_title')} prevPage="/" showPrevIcon={true} />
       {isDataLoaded && (
         <div className="success-page-wrapper">
         <div className="success-page">
-          <h2>Teşekkürler!</h2>
+          <h2>{t('thanks')}</h2>
           <p>
-            Başvurunuz başarıyla alındı. Başvuru detayları aşağıda yer almaktadır.
+            {t('thanks_message')}
           </p>
           <ul>
-            <li>
-              <strong>Adı:</strong> {applicationData?.firstName}
+            <li className='margin-top-15 margin-bottom-15'>
+              <strong>{t('name_of')}:</strong> {applicationData?.firstname}
             </li>
             <li>
-              <strong>Soyadı:</strong> {applicationData?.lastName}
+              <strong>{t('surname_of')}:</strong> {applicationData?.lastname}
             </li>
             <li>
-              <strong>Başvuru Tarihi:</strong> {new Date(applicationData?.createdAt).toLocaleDateString()}
+              <strong>{t('date_of')}:</strong> {new Date(applicationData?.createdAt).toLocaleDateString()}
             </li>
             <li>
-              <strong>Başvuru Numarası:</strong> {applicationId}
+              <strong>{t('number_of')}:</strong> {applicationId}
             </li>
           </ul>
           <div className="note-section">
             <p>
-              Not: Başvurularınızı bu numara ile takip edebilirsiniz. Lütfen bu numarayı not ediniz.
+              {t('ps')}: {t('ps_message')}
             </p>
           </div>
         </div>
@@ -61,4 +60,4 @@ const SuccessApplication =  () => {
   );
 };
 
-export default SuccessApplication;
+export default withLoading(SuccessApplication);

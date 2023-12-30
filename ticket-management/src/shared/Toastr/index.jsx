@@ -3,6 +3,7 @@ import { BsCheckCircle } from "react-icons/bs";
 import { BsExclamationCircleFill } from "react-icons/bs";
 
 import '~/styles/toastr.scss';
+import { useTranslation } from 'react-i18next';
 
 const Toastr = (
   {
@@ -11,7 +12,7 @@ const Toastr = (
     onClose
   }
 ) => {
-  console.log(type, message)
+  const { t } = useTranslation();
 
   const toastrClass = type === 'success' ? 'toastr-success' : 'toastr-error';
   const icon = type === 'success' ? <BsCheckCircle /> : <BsExclamationCircleFill />;
@@ -22,7 +23,7 @@ const Toastr = (
         <p>
           {icon}
           <span>
-            {message}
+            {t(message)}
           </span>
         </p>
       </div>

@@ -1,27 +1,33 @@
-import React, { useCallback } from 'react';
 import { ContentHeader } from '~/shared';
+import Dropzone from 'react-dropzone';
+import { useToastr } from '~/context';
+
+import { categories } from '~/constants';
+
+import { createTicket } from '~/services';
+import { storage } from '~/services';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 import { useForm, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { collection, doc, setDoc } from 'firebase/firestore';
-import { db, storage } from '~/services';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import '~/styles/CreateApplication.scss';
-import { useToastr } from '~/context';
-import { useNavigate } from 'react-router-dom';
-import Dropzone from 'react-dropzone';
+import withLoading from '~/hoc/withLoading';
 
 const schema = yup.object({
-  firstName: yup.string().required('Bu alan zorunludur.'),
-  lastName: yup.string().required('Bu alan zorunludur.'),
-  email: yup.string().email().required('Bu alan zorunludur.'),
-  tckn: yup.string().length(11, 'TCKN 11 haneli olmalıdır.').required('Bu alan zorunludur.'),
-  adress: yup.string().required('Bu alan zorunludur.'),
-  description: yup.string().min(60).required('Bu alan zorunludur.'),
-  attachments: yup.array()
+  firstname: yup.string().required('required_field'),
+  lastname: yup.string().required('required_field'),
+  email: yup.string().email().required('required_field'),
+  tckn: yup.string().length(11, 'tckn_must_11').required('required_field'),
+  subject: yup.string().required('required_field'),
+  description: yup.string().min(60, 'required_min_60').required('required_field'),
+  attachments: yup.array(),
 });
 
-const CreateApplication = () => {
+const CreateApplication = ({setLoading}) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const showToastr = useToastr();
   const {
@@ -38,48 +44,30 @@ const CreateApplication = () => {
     name: 'attachments',
   });
   const onDrop = (acceptedFiles) => {
-    append(
-      acceptedFiles.map((files) => ({ files, name: files.name, size: files.size })),
-    )};
-      
+    append(acceptedFiles.map((files) => ({ files, name: files.name, size: files.size })));
+  };
 
   const onSubmit = async (data) => {
-    console.log('Form Data:', data); // Form verilerini kontrol et
-    console.log('Fields:', fields);
     const docId = new Date().getTime().toString();
     try {
       const uploadedUrls = await Promise.all(fields.map((item, index) => uploadAttachments(item, docId)));
 
       data.attachments = uploadedUrls;
-      const docCollection = collection(db, 'applications');
-      const docRef = doc(docCollection, docId);
-
-      await setDoc(docRef, {
-        applicationDescription: data.description,
-        applicationSubject: '1',
-        createdAt: Number(new Date()),
-        updatedAt: Number(new Date()),
-        email: data.email,
-        firstName: data.firstName,
-        id: docId,
-        lastName: data.lastName,
-        tckn: data.tckn,
-        attachments: data.attachments,
-        isSolved: false,
-        solutionDescription: '',
-      })
-        .then(() => {
-          showToastr('success', 'Başvuru başarıyla oluşturuldu.');
-          navigate(`/application-success/${docId}`);
-        })
-        .catch((err) => console.log(err));
+      const result = await createTicket(data);
+      if(result.status === 201) {
+        const ticketId = result.data.data._id;
+        showToastr('success', t('success_application'));
+        navigate(`/application-success/${ticketId}`);
+      }
     } catch (error) {
       console.error('Hata:', error.message);
+    }finally{
+      setLoading(false);
     }
   };
 
   const uploadAttachments = async (attachments, docId) => {
-    console.log(attachments);
+    setLoading(true);
     const storageRef = ref(storage, `/${docId}/${attachments.name}`);
     const uploadTask = uploadBytesResumable(storageRef, attachments.files);
 
@@ -106,67 +94,73 @@ const CreateApplication = () => {
 
   return (
     <div className='create-application-wrapper'>
-      <ContentHeader title='Başvuru Oluştur' prevPage='/' showPrevIcon={true} />
+      <ContentHeader title={t('create_application')} prevPage='/' showPrevIcon={true} />
       <div className='form-wrapper'>
         <form onSubmit={handleSubmit(onSubmit)} className='application-form'>
           <div className='form-name-group'>
             <div className='form-group'>
-              <label>Ad</label>
-              <input {...register('firstName')} />
-              <p className='error-message'>{errors.firstName?.message}</p>
+              <label>{t('name')}</label>
+              <input {...register('firstname')} />
+              <p className='error-message'>{t(errors.firstname?.message)}</p>
             </div>
             <div className='form-group'>
-              <label>Soyad</label>
-              <input {...register('lastName')} />
-              <p className='error-message'>{errors.lastName?.message}</p>
+              <label>{t('surname')}</label>
+              <input {...register('lastname')} />
+              <p className='error-message'>{t(errors.lastname?.message)}</p>
             </div>
           </div>
           <div className='form-email-group'>
             <div className='form-group'>
-              <label>Email</label>
+              <label>{t('email')}</label>
               <input {...register('email')} />
-              <p className='error-message'>{errors.email?.message}</p>
+              <p className='error-message'>{t(errors.email?.message)}</p>
             </div>
             <div className='form-group'>
-              <label>TCKN</label>
+              <label>{t('tckn')}</label>
               <input {...register('tckn')} />
-              <p className='error-message'>{errors.tckn?.message}</p>
+              <p className='error-message'>{t(errors.tckn?.message)}</p>
             </div>
           </div>
           <div className='form-group'>
-            <label>Adres</label>
-            <textarea {...register('adress')} />
-            <p className='error-message'>{errors.adress?.message}</p>
+            <label>{t('subject')}</label>
+            <select {...register('subject')}>
+              {categories.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {t(item.name)}
+                </option>
+              ))}
+            </select>
+            <p className='error-message'>{t(errors.subject?.message)}</p>
           </div>
           <div className='form-group'>
-            <label>Açıklama</label>
+            <label>{t('description')}</label>
             <textarea {...register('description')} rows={3} />
-            <p className='error-message'>{errors.description?.message}</p>
+            <p className='error-message'>{t(errors.description?.message)}</p>
           </div>
           <div className='form-group'>
-            <label>Ek Dosyalar</label>
+            <label>{t('attachment_files')}</label>
             <Dropzone onDrop={onDrop}>
               {({ getRootProps, getInputProps }) => (
                 <div {...getRootProps()} className='dropzone'>
                   <input {...getInputProps()} />
-                  <p>Drag 'n' drop some files here, or click to select files</p>
+                  <p>{t('drag_drop')}</p>
                 </div>
               )}
             </Dropzone>
-            <p className='error-message'>{errors.attachments?.message}</p>
+            <p className='error-message'>{t(errors.attachments?.message)}</p>
             <ul>
               {fields.map((item, index) => (
                 <li key={item.id}>
                   <span>{item.name}</span>
                   <button type='button' onClick={() => remove(index)}>
-                    Remove
+                    {t('delete')}
                   </button>
                 </li>
               ))}
             </ul>
           </div>
           <button className='button w-100 justify-content-center' type='submit'>
-            Başvuru Oluştur
+            {t('create_application')}
           </button>
         </form>
       </div>
@@ -174,5 +168,5 @@ const CreateApplication = () => {
   );
 };
 
-export default CreateApplication;
+export default withLoading(CreateApplication);
 

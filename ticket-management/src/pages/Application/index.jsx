@@ -4,31 +4,24 @@ import withLoading from '~/hoc/withLoading';
 import { status } from '~/constants';
 import { ContentHeader } from '~/shared';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '~/services';
+import { db, getTicketById } from '~/services';
 import '~/styles/application.scss';
 
 const Application = ({ setLoading, loading }) => {
   const { applicationId } = useParams();
   const [ticketData, setTicketData] = useState();
   const [hasData, setHasData] = useState(true);
-  console.log(loading);
   useEffect(() => {
+    setLoading(true);
     const getTicket = async () => {
-      try {
-        setLoading(true);
-        const docRef = doc(db, 'applications', applicationId);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setTicketData(docSnap.data());
-          console.log('Document data:', docSnap.data());
-        } else {
-          setHasData(false);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+      const result = await getTicketById(applicationId);
+      if (result.status === 200) {
+        setTicketData(result.data.data);
+        setHasData(true);
+      } else {
+        setHasData(false);
       }
+      setLoading(false);
     };
     getTicket();
   }, [applicationId]);
@@ -54,7 +47,7 @@ const Application = ({ setLoading, loading }) => {
                         </tr>
                         <tr>
                           <td>Son Güncellenme Tarihi:</td>
-                          <td>{new Date(ticketData?.updatedAt).toLocaleString()}</td>
+                          <td>{new Date(ticketData?.updatedAt || ticketData?.createdAt).toLocaleString()}</td>
                         </tr>
                         <tr>
                           <td>Durumu:</td>
@@ -65,11 +58,19 @@ const Application = ({ setLoading, loading }) => {
                   </div>
                   <div className='application-messages'>
                     <h3>Mesajlar</h3>
-                    <ul>
-                      {ticketData?.solutionDescription.map((message, index) => (
+                    {ticketData?.solutions.length ? (
+                      <ul>
+                      {ticketData?.solutions.map((message, index) => (
                         <li key={index}>{message}</li>
                       ))}
                     </ul>
+                    ) : (
+                      <div className='application-card-body-empty'>
+                        <div className='application-card-body-empty-title'>
+                          Şu an için mesaj bulunmamaktadır.
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </>
               ) : (

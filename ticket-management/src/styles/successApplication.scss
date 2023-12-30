@@ -1,4 +1,4 @@
-/* SuccessApplication.scss */
+@import '../shared/styles/display.scss';
 
 .success-page-wrapper {
     max-width: 600px;
@@ -21,6 +21,9 @@
           margin-bottom: 10px;
           strong {
             margin-right: 5px;
+          }
+          &:first-child {
+            margin-top: 10px;
           }
         }
       }
