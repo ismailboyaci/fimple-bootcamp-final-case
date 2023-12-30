@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import withLoading from '~/hoc/withLoading';
 import { status } from '~/constants';
 import { ContentHeader } from '~/shared';
-import { doc, getDoc } from 'firebase/firestore';
-import { db, getTicketById } from '~/services';
+import { getTicketById } from '~/services';
 import '~/styles/application.scss';
 
 const Application = ({ setLoading, loading }) => {

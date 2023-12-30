@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import '~/styles/CreateApplication.scss';
+import '~/styles/createApplication.scss';
 import withLoading from '~/hoc/withLoading';
 
 const schema = yup.object({
