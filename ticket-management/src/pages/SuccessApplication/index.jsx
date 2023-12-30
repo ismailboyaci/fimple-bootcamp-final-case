@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import { ContentHeader } from '~/shared';
 import { getTicketById } from '~/services';
-import '~/styles/SuccessApplication.scss';
+import '~/styles/successApplication.scss';
 import withLoading from '~/hoc/withLoading';
 import { useTranslation } from 'react-i18next';
 const SuccessApplication =  ({setLoading}) => {
