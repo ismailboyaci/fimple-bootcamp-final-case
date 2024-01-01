@@ -136,10 +136,13 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .admin-page-wrapper {
-    .content{
-      right: 0;
+    .main{
+      .content{
+        position: absolute;
+        width: 80%;
+      }
     }
   }
 }

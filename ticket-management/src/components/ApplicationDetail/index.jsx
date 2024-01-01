@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import '~/styles/application-detail.scss';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { categories, status } from '~/constants';
 import * as yup from 'yup';
 import { updateTicket, getTicketById } from '~/services';
-import { useAuth } from "~/context";
+import { useAuth } from '~/context';
 import { useTranslation } from 'react-i18next';
 import { useToastr } from '~/context';
 
@@ -27,7 +27,7 @@ const ApplicationDetail = () => {
   useEffect(() => {
     const getTicketData = async () => {
       const response = await getTicketById(applicationId);
-      if(response.status === 200) {
+      if (response.status === 200) {
         setTicketData(response.data.data);
       }
     };
@@ -44,17 +44,17 @@ const ApplicationDetail = () => {
   });
 
   const onSubmit = async (data) => {
-   const params = {
-    solutions: [...ticketData?.solutions,data.solution],
-    status: data.status,
-    lastreply: user.email,
-    updatedAt: new Date()
-   }
-   const response = await updateTicket(applicationId, params);
-   if(response.status === 200) {
-    navigate('tickets');
-   }
-}
+    const params = {
+      solutions: [...ticketData?.solutions, data.solution],
+      status: data.status,
+      lastreply: user.email,
+      updatedAt: new Date(),
+    };
+    const response = await updateTicket(applicationId, params);
+    if (response.status === 200) {
+      navigate('tickets');
+    }
+  };
 
   return (
     <div className='application-detail-wrapper'>
@@ -72,9 +72,7 @@ const ApplicationDetail = () => {
                   {t('attachment')} {index + 1}
                 </a>
               ))}
-              {ticketData?.attachments.length === 0 && <p>
-                {t('no_attachment')}
-                </p>}
+              {ticketData?.attachments.length === 0 && <p>{t('no_attachment')}</p>}
             </div>
           </div>
         </div>
@@ -148,3 +146,4 @@ const ApplicationDetail = () => {
 };
 
 export default ApplicationDetail;
+

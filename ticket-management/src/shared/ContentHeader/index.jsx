@@ -2,7 +2,7 @@ import React from 'react';
 import { GrPrevious } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
 
-import '~/styles/contentHeader.scss';
+import '~/styles/content-header.scss';
 
 const ContentHeader = ({ title, prevPage, showPrevIcon }) => {
   const navigate = useNavigate();

@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import '~/styles/createApplication.scss';
+import '~/styles/create-application.scss';
 import withLoading from '~/hoc/withLoading';
 
 const schema = yup.object({
@@ -76,15 +76,12 @@ const CreateApplication = ({setLoading}) => {
         'state_changed',
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
         },
         (error) => {
-          console.log(error);
           reject(error);
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            console.log('Upload is complete');
             resolve(url);
           });
         },

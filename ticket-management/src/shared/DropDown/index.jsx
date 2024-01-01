@@ -4,9 +4,7 @@ import '~/styles/dropdown.scss';
 
 const Dropdown = ({ options, onSelect }) => {
   const { i18n } = useTranslation();
-  console.log(options.reverse());
   const newOptions = i18n.language === 'tr-TR' ? options.reverse() : options;
-  console.log(newOptions);
   const [selectedOption, setSelectedOption] = useState(newOptions[0]);
   const [isOpen, setIsOpen] = useState(false);
   const [isInitialSelection, setIsInitialSelection] = useState(true);
@@ -16,7 +14,6 @@ const Dropdown = ({ options, onSelect }) => {
     setIsOpen(false);
     setIsInitialSelection(false);
 
-    // onSelect fonksiyonunu sadece bir seçenek seçildiğinde çağır
     if (option.value !== selectedOption.value) {
       onSelect(option);
     }

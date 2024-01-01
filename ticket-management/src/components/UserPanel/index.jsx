@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import '~/styles/user-panel.scss';
-import { FaUserPlus, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaUserPlus, FaTrash } from 'react-icons/fa';
 import { RegisterModal } from '..';
 import { deleteUser, getUsers } from '~/services';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,6 @@ const UserPanel = () => {
     if(result.status === 200) {
       setUserTable(result.data.users);
       setTotalUserRecord(result.data.total);
-      console.log(result.data.users[0].isSuperAdmin)
     }
   }
   useEffect(() => {

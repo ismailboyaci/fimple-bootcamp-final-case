@@ -34,7 +34,6 @@ const RegisterModal = ({ closeModal }) => {
         const profileUrl = await uploadAttachments(data.profileImg[0], Number(new Date()));
         data.profileImg = profileUrl;
       }
-      console.log(data);
       const result = await registerUser(data);
       if (result.status === 201) {
         closeModal(true);
@@ -53,15 +52,12 @@ const RegisterModal = ({ closeModal }) => {
         'state_changed',
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
         },
         (error) => {
-          console.log(error);
           reject(error);
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-            console.log('Upload is complete');
             resolve(url);
           });
         },
@@ -95,7 +91,7 @@ const RegisterModal = ({ closeModal }) => {
               <input type='password' name='password' {...register('password')} />
               {errors.password && <p className='error-message'>{errors.password.message}</p>}
             </label>
-            <label>
+            <label className='is-superadmin-label'>
               {t('is_superadmin')}:
               <input type='checkbox' name='isSuperAdmin' {...register('isSuperAdmin')}/>
             </label>

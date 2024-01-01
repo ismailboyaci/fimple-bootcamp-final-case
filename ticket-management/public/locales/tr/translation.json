@@ -65,5 +65,16 @@
     "is_superadmin": "Süper Admin",
     "actions": "İşlemler",
     "yes": "Evet",
-    "no": "Hayır"
+    "no": "Hayır",
+    "enter_application_number": "Başvuru Numarasını Giriniz",
+    "query": "Sorgula",
+    "application": "Başvuru",
+    "messages": "Mesajlar",
+    "no_message_now": "Şu an için bir mesaj bulunmamaktadır",
+    "no_application": "Başvuru bulunmamaktadır",
+    "application_details": "Başvuru Detayları",
+    "last_update_date": "Son Güncelleme Tarihi",
+    "Incorrect password": "Hatalı şifre girdiniz",
+    "User does not exist": "Kullanıcı bulunamadı",
+    "details_application": "Başvuru Detayları"
 }

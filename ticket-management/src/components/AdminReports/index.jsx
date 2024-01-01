@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from 'react';
-import { PieChart, Pie, Cell } from 'recharts';
 import { status } from '~/constants';
 import { categories } from '~/constants';
 import { getTickets } from '~/services';
@@ -22,13 +21,13 @@ const tabs = [
   },
 ];
 
-const AdminReports = ({setLoading}) => {
-    const { t } = useTranslation();
-    const [subjectStatusCounts, setSubjectStatusCounts] = useState([]);
-    const [currentTab, setCurrentTab] = useState(1);
-    const [statusData, setStatusData] = useState([]);
+const AdminReports = ({ setLoading }) => {
+  const { t } = useTranslation();
+  const [subjectStatusCounts, setSubjectStatusCounts] = useState([]);
+  const [currentTab, setCurrentTab] = useState(1);
+  const [statusData, setStatusData] = useState([]);
 
-    const mapStatusToLabel = useMemo(
+  const mapStatusToLabel = useMemo(
     () => (statusCode) => {
       const label = status.find((status) => status.id == statusCode);
       return label ? label.name : '';
@@ -73,12 +72,11 @@ const AdminReports = ({setLoading}) => {
 
   useEffect(() => {
     const fetchData = async () => {
-        setLoading(true);
+      setLoading(true);
       const subjects = [1, 2, 3, 4, 5];
       const updatedCounts = [];
 
       if (currentTab === 2) {
-
         for (const s of status) {
           const response = await getTickets(1, 10, s.id, '', '', '');
 
@@ -136,8 +134,8 @@ const AdminReports = ({setLoading}) => {
     };
 
     fetchData().finally(() => {
-        setLoading(false);
-    })
+      setLoading(false);
+    });
   }, [debouncedCurrentTab]);
 
   const setTab = (index) => {

@@ -25,8 +25,16 @@
     flex-wrap: wrap;
     gap: 30px;
 
-    p {
+    .title-report{
       text-align: center;
+      border-bottom: 1px solid #555;
+      padding-bottom: 5px;
+    border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    p {
+      text-align: left;
     }
     ul {
       list-style: none;

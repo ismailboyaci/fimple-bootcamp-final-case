@@ -8,6 +8,7 @@ const CategoryTable = ({ subjectStatusCounts, renderCustomizedLabel, COLORS, cat
     <>
       {subjectStatusCounts.map((subjectStatusCount) => (
        <div key={subjectStatusCount.subject}>
+       <p className='title-report'>{t(categories.find((category) => category.id === subjectStatusCount.subject).name)}</p>
        <PieChart width={200} height={200}>
        <Tooltip enabled={true} cornerRadius={15} ></Tooltip>
          <Pie
@@ -25,7 +26,6 @@ const CategoryTable = ({ subjectStatusCounts, renderCustomizedLabel, COLORS, cat
            ))}
          </Pie>
        </PieChart>
-       <p>{t(categories.find((category) => category.id === subjectStatusCount.subject).name)}</p>
        <p>{t('total_application') + ' : ' + subjectStatusCount.data.length}</p>
        <ul>
          {subjectStatusCount.data.map((entry, index) => (

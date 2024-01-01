@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<svg
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:cc="http://web.resource.org/cc/"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    id="Ebene_1"
+    xml:space="preserve"
+    viewBox="0 0 110 175"
+    y="0px"
+    version="1.1"
+    enable-background="new 0 0 110 175"
+    x="0px"
+  >
+<g
+      id="Help"
+    >
+			<path
+        d="m106.03 64.673c0.18-0.806 0.337-1.62 0.477-2.439 0.475-2.634 0.753-5.135 0.753-7.434 0-0.149-0.017-0.292-0.022-0.439 0.006-0.287 0.022-0.572 0.022-0.859 0-28.447-23.062-51.508-51.508-51.508-28.447 0-51.508 23.061-51.508 51.508 0 0.284 0.017 0.563 0.021 0.846-0.005 0.152-0.022 0.298-0.022 0.452 0 34.263 51.508 103.02 51.508 103.02s40.504-55.316 49.657-90.638c0.176-0.634 0.336-1.275 0.486-1.92 0.04-0.2 0.09-0.395 0.13-0.589z"
+        fill="#E30613"
+    />
+		<mask
+        id="SVGID_1_"
+        height="155.822"
+        width="103.016"
+        y="1.994"
+        x="4.243"
+        maskUnits="userSpaceOnUse"
+      >
+		</mask
+    >
+		<g
+        opacity=".5"
+        mask="url(#SVGID_1_)"
+      >
+			<path
+          d="m106.03 64.673c0.18-0.806 0.337-1.62 0.477-2.439 0.475-2.634 0.753-5.135 0.753-7.434 0-0.149-0.017-0.292-0.022-0.439 0.006-0.287 0.022-0.572 0.022-0.859 0-28.447-23.062-51.508-51.508-51.508-28.447 0-51.508 23.061-51.508 51.508 0 0.284 0.017 0.563 0.021 0.846-0.005 0.152-0.022 0.298-0.022 0.452 0 34.263 51.508 103.02 51.508 103.02s40.504-55.316 49.657-90.638c0.176-0.634 0.336-1.275 0.486-1.92 0.04-0.2 0.09-0.395 0.13-0.589z"
+      />
+		</g
+    >
+	<path
+        id="path5267"
+        d="m48.087 52.676l-18.09-1.974c2.758-15.41 11.713-23.118 26.862-23.118 7.625 0 13.639 2.013 18.042 6.039 4.402 4.025 6.604 9.014 6.604 14.958 0 2.632-0.438 5.027-1.306 7.197-0.869 2.17-1.989 3.952-3.354 5.349-1.365 1.396-3.574 3.213-6.627 5.447-2.334 1.708-3.82 2.952-4.463 3.72-0.639 0.772-1.076 1.899-1.307 3.38h-16.36c-0.001-3.98 0.353-6.845 1.06-8.604 0.706-1.757 2.16-3.623 4.36-5.596 3.319-2.991 5.39-5.215 6.209-6.677 0.824-1.464 1.233-3.166 1.233-5.102 0-2.038-0.54-3.607-1.625-4.708-1.087-1.103-2.431-1.654-4.041-1.654-4.766 0.002-7.167 3.781-7.197 11.343zm18.238 25.233v17.994h-18.881v-17.994h18.881z"
+        fill="#fff"
+    />
+</g
+  >
+<metadata
+    ><rdf:RDF
+      ><cc:Work
+        ><dc:format
+          >image/svg+xml</dc:format
+        ><dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        /><cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        /><dc:publisher
+          ><cc:Agent
+              rdf:about="http://openclipart.org/"
+            ><dc:title
+              >Openclipart</dc:title
+            ></cc:Agent
+          ></dc:publisher
+        ><dc:title
+          >Red Help Icon</dc:title
+        ><dc:date
+          >2013-05-05T21:51:55</dc:date
+        ><dc:description
+          >A red icon shaped like a location pointer, with a question mark. Could be used as a help icon or the question mark could be replaced with another symbol.</dc:description
+        ><dc:source
+          >https://openclipart.org/detail/177823/red-help-icon-by-j32-177823</dc:source
+        ><dc:creator
+          ><cc:Agent
+            ><dc:title
+              >J32</dc:title
+            ></cc:Agent
+          ></dc:creator
+        ><dc:subject
+          ><rdf:Bag
+            ><rdf:li
+              >arrow</rdf:li
+            ><rdf:li
+              >color</rdf:li
+            ><rdf:li
+              >help</rdf:li
+            ><rdf:li
+              >icon</rdf:li
+            ><rdf:li
+              >icons</rdf:li
+            ><rdf:li
+              >indicator</rdf:li
+            ><rdf:li
+              >location</rdf:li
+            ><rdf:li
+              >location marker</rdf:li
+            ><rdf:li
+              >map</rdf:li
+            ><rdf:li
+              >map marker</rdf:li
+            ><rdf:li
+              >notification</rdf:li
+            ><rdf:li
+              >pointer</rdf:li
+            ><rdf:li
+              >question</rdf:li
+            ><rdf:li
+              >red</rdf:li
+            ></rdf:Bag
+          ></dc:subject
+        ></cc:Work
+      ><cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        ><cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        /><cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        /><cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        /></cc:License
+      ></rdf:RDF
+    ></metadata
+  ></svg
+>

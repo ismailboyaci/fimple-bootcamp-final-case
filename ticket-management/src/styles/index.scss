@@ -2,25 +2,26 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Sofia Pro', sans-serif;
 }
 
 // small screen
-@media only screen and (max-width: 600px) {
-  * {
-    font-size: 12px;
-  }
-}
+// @media only screen and (max-width: 600px) {
+//   * {
+//     font-size: 12px;
+//   }
+// }
 
-// medium screen
-@media only screen and (min-width: 601px) and (max-width: 768px) {
-  * {
-    font-size: 14px;
-  }
-}
+// // medium screen
+// @media only screen and (min-width: 601px) and (max-width: 768px) {
+//   * {
+//     font-size: 14px;
+//   }
+// }
 
-// large screen
-@media only screen and (min-width: 769px) {
-  * {
-    font-size: 16px;
-  }
-}
+// // large screen
+// @media only screen and (min-width: 769px) {
+//   * {
+//     font-size: 16px;
+//   }
+// }

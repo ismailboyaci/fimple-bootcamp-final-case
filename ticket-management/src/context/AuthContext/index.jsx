@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
         return response.status;
       }
     } catch (error) {
-      console.error('Login error:', error.message);
+      return error.response;
     }
   };
 
@@ -47,7 +47,6 @@ export function AuthProvider({ children }) {
       const userToken = Cookies.get('userToken');
 
       if (!userToken) {
-        console.error('Us er token not found');
         return;
       }
       const response = await axios.post(`${BASE_URL}verifyToken`, {
@@ -61,7 +60,7 @@ export function AuthProvider({ children }) {
         return userData;
       }
     } catch (error) {
-      console.error('Verify token error:', error.message);
+      return error.response;
     }
   };
   

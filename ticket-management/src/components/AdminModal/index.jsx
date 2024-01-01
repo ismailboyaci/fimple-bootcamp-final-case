@@ -20,10 +20,9 @@ const AdminModal = ({ onClose, onLogin }) => {
       if(res === 200){
         showToastr('success', 'success_login');
         navigate('/admin')
+      }else {
+        showToastr('error', res.data.message);
       }
-    })
-    .catch((err) => {
-      console.log(err)
     })
   };
 

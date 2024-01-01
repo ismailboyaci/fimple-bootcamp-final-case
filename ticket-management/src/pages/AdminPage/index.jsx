@@ -5,8 +5,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { BiSupport } from "react-icons/bi";
 import { RiMenuUnfoldFill } from "react-icons/ri";
 import { RiMenuFoldFill } from "react-icons/ri";
+import { HiOutlineDocumentReport } from "react-icons/hi";
 import { AdminHeader, AdminReports, ApplicationDetail, TicketsPanel, UserPanel } from '~/components';
 import { useTranslation } from 'react-i18next';
+import { FaUsers } from "react-icons/fa6";
+
 
 const menuItems = [
   {
@@ -17,13 +20,13 @@ const menuItems = [
   },
   {
     title: 'reports',
-    icon: <BiSupport size={24} />,
+    icon: <HiOutlineDocumentReport size={24} />,
     link: '/admin/reports',
     tab: 'reports',
   },
   {
     title: 'users',
-    icon: <BiSupport size={24} />,
+    icon: <FaUsers size={24} />,
     link: '/admin/users',
     tab: 'users',
   }
@@ -50,9 +53,7 @@ const AdminPage = () => {
   useEffect(() => {
     if (isMobile) {
       setOpenSidebar(false);
-      console.log('mobile')
     }
-    console.log('desktop')
   }, [isMobile]);
 
   return (

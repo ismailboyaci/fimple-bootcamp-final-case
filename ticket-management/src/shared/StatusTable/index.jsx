@@ -8,6 +8,7 @@ const StatusTable = ({ statusData, renderCustomizedLabel, COLORS }) => {
     <>
       {statusData.map((statusCount, index) => (
         <div key={`status-${index}`}>
+          <p className='title-report'>{t(statusCount.status.name)}</p>
         <PieChart width={200} height={200}>
           <Pie
             data={statusCount.data}
@@ -24,7 +25,6 @@ const StatusTable = ({ statusData, renderCustomizedLabel, COLORS }) => {
             ))}
           </Pie>
         </PieChart>
-        <p>{t(statusCount.status.name)}</p>
         <p>{t('total_application')}{' : '+ statusCount.data.length}</p>
         <ul>
           {statusCount.data.map((entry, index) => (
