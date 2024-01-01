@@ -4,8 +4,7 @@ import '~/styles/dropdown.scss';
 
 const Dropdown = ({ options, onSelect }) => {
   const { i18n } = useTranslation();
-  const newOptions = i18n.language === 'tr-TR' ? options.reverse() : options;
-  const [selectedOption, setSelectedOption] = useState(newOptions[0]);
+  const [selectedOption, setSelectedOption] = useState(options[0]);
   const [isOpen, setIsOpen] = useState(false);
   const [isInitialSelection, setIsInitialSelection] = useState(true);
 
@@ -21,10 +20,10 @@ const Dropdown = ({ options, onSelect }) => {
 
   useEffect(() => {
     if (isInitialSelection) {
-      setSelectedOption(newOptions[0]);
+      setSelectedOption(options[0]);
       setIsInitialSelection(false);
     }
-  }, [isInitialSelection, newOptions]);
+  }, [isInitialSelection, options]);
 
   return (
     <div className='dropdown-container'>
@@ -38,7 +37,7 @@ const Dropdown = ({ options, onSelect }) => {
       </div>
       {isOpen && (
         <div className='options-container'>
-          {newOptions.map((option) => (
+          {options.map((option) => (
             <div
               key={option.value}
               className='option'

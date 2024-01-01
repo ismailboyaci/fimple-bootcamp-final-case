@@ -68,7 +68,7 @@ const Application = ({ setLoading, loading }) => {
                     ) : (
                       <div className='application-card-body-empty'>
                         <div className='application-card-body-empty-title'>
-                          {t('no_message')}
+                          {t('no_message_now')}
                         </div>
                       </div>
                     )}
