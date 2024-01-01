@@ -29,6 +29,7 @@ const menuItems = [
     icon: <FaUsers size={24} />,
     link: '/admin/users',
     tab: 'users',
+    visibility: true
   }
 ];
 
@@ -70,10 +71,12 @@ const AdminPage = () => {
           </div>
         <ul className={`menu-list ${!openSidebar ? 'closed' : ''}`}>
           {menuItems.map((item, index) => (
-            <li key={index} onClick={() => navigate(item.link)} className={`tab ${item.tab === tab ? 'active-tab': ''}`}>
-              <p className='tab-icon'>{item.icon}</p>
-              <p className={`tab-title ${!openSidebar ? 'closed' : ''}`}>{t(item.title)}</p>
-            </li>
+            (item.visibility === undefined || user.isSuperAdmin == item.visibility) && (
+              <li key={index} onClick={() => navigate(item.link)} className={`tab ${item.tab === tab ? 'active-tab': ''}`}>
+                <p className='tab-icon'>{item.icon}</p>
+                <p className={`tab-title ${!openSidebar ? 'closed' : ''}`}>{t(item.title)}</p>
+              </li>
+            )
           ))}
         </ul>
       </aside>
