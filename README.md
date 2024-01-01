@@ -33,9 +33,15 @@ With reporting tools, they will be able to access issue resolution times, freque
 
 ## Screenshots
 
-`![Writing](https://unsplash.com/photos/VBPzRgd7gfc)`
+<img src="https://github.com/ismailboyaci/fimple-bootcamp-final-case/blob/main/screenshots/Help%20Desk%20hp.png" width="500">
+<img src="https://github.com/ismailboyaci/fimple-bootcamp-final-case/blob/main/screenshots/FireShot%20Capture%20002%20-%20Help%20Desk%20-%20fimple-bootcamp-final-case.vercel.app.png" width="500">
+<img src="https://github.com/ismailboyaci/fimple-bootcamp-final-case/blob/main/screenshots/FireShot%20Capture%20003%20-%20Help%20Desk%20-%20fimple-bootcamp-final-case.vercel.app.png" width="500">
+<img src="https://github.com/ismailboyaci/fimple-bootcamp-final-case/blob/main/screenshots/FireShot%20Capture%20004%20-%20Help%20Desk%20-%20fimple-bootcamp-final-case.vercel.app.png" width="500">
+<img src="https://github.com/ismailboyaci/fimple-bootcamp-final-case/blob/main/screenshots/FireShot%20Capture%20005%20-%20Help%20Desk%20-%20fimple-bootcamp-final-case.vercel.app.png" width="500">
+<img src="https://github.com/ismailboyaci/fimple-bootcamp-final-case/blob/main/screenshots/FireShot%20Capture%20006%20-%20Help%20Desk%20-%20fimple-bootcamp-final-case.vercel.app.png" width="500">
+<img src="https://github.com/ismailboyaci/fimple-bootcamp-final-case/blob/main/screenshots/FireShot%20Capture%20007%20-%20Help%20Desk%20-%20fimple-bootcamp-final-case.vercel.app.png" width="500">
+<img src="https://github.com/ismailboyaci/fimple-bootcamp-final-case/blob/main/screenshots/FireShot%20Capture%20008%20-%20Help%20Desk%20-%20fimple-bootcamp-final-case.vercel.app.png" width="500">
 
-Picture by [Kelly Sikkema](https://unsplash.com/@kellysikkema)
 
 ## Technologies
 - Front End: React.js
