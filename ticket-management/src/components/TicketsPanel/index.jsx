@@ -8,7 +8,6 @@ import { categories, status } from '~/constants';
 import { useTranslation } from 'react-i18next';
 
 const pageOptions = [
-  { text: '3', value: 3 },
   { text: '5', value: 5 },
   { text: '10', value: 10 },
   { text: '20', value: 20 }
