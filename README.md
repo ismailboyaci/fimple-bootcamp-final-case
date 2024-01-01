@@ -44,11 +44,11 @@ With reporting tools, they will be able to access issue resolution times, freque
 
 
 ## Technologies
-- Front End: React.js
+- Frontend: React.js
 - State Management: Context Api
 - Form: React Hook Form
 - Form Validation: Yup
 - Router: React Router Dom
-- Backend: Node.js, Express.js
+- Backend: Node.js, Express.js [Backend Repo](https://github.com/ismailboyaci/ticket-management-backend)
 - File Storage: Firebase 
 
